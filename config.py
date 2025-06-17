@@ -11,4 +11,12 @@ client = MongoClient(mongoURI)
 
 # Define DB and collection
 db = client['HealthTracker']
+
+# Schemas of different collections
+schemas = {
+    "Users":{
+
+    },
+    ""
+}
 collection = db["Users"]
