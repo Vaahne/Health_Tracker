@@ -1,6 +1,7 @@
 from flask import Blueprint, request , jsonify
 from models.Goals import goals
 from bson import ObjectId
+from datetime import datetime
 
 goalRouter = Blueprint("goalRouter",__name__)
 
@@ -20,10 +21,16 @@ def add_goal():
     try:
         print('Hello from adding goal')
         data = request.json
+        data['userId'] = ObjectId(data['userId'])
+        data['type'] = ObjectId(data['type'])
+        data['startDate'] = datetime.strptime(data['startDate'], '%d-%m-%Y')
+        data['endDate'] = datetime.strptime(data['endDate'], '%d-%m-%Y')
+        if 'createdAt' not in data:
+            data['createdAt'] = datetime.utcnow()
         goals.insert_one(data)
         return jsonify({'message': 'Goal added!'}),201
     except Exception as e:
-        return jsonify({'errors' :[{msg:'Server error'}]}),500
+        return jsonify({'errors' :[{'msg':'Server error'}]}),500
     
 # Delete a goal
 @goalRouter.route('/delete/<goal_id>',methods=['DELETE'])
@@ -35,7 +42,7 @@ def delete_goal(goal_id):
             return jsonify({'errors':[{'msg':'Goal doesnt exist!!'}]}),404
         return jsonify({'message': 'Goal Deleted !'}),201
     except Exception as e:
-        return jsonify({'errors' :[{msg:'Server error'}]}),500
+        return jsonify({'errors' :[{'msg':'Server error'}]}),500
 
 # Update a goal
 @goalRouter.route('/update/<goal_id>',methods=['PUT'])
