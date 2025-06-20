@@ -13,10 +13,16 @@ client = MongoClient(mongoURI)
 db = client['HealthTracker']
 
 # Schemas of different collections
-schemas = {
-    "Users":{
+# schemas = {
+#     "Activities":{
+        
+#     }
+# }
+# # collection = db["Users"]
 
-    },
-    ""
-}
-collection = db["Users"]
+# # Apply schema for each collection
+# for collection , schema in schemas.items():
+#     db.command({
+#         "collMod": collection,
+#         "validator": schema
+#     })
