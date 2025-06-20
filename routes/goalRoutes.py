@@ -27,6 +27,8 @@ def add_goal():
         data['endDate'] = datetime.strptime(data['endDate'], '%d-%m-%Y')
         if 'createdAt' not in data:
             data['createdAt'] = datetime.utcnow()
+        if 'completed' not in data:
+            data['completed'] = False
         goals.insert_one(data)
         return jsonify({'message': 'Goal added!'}),201
     except Exception as e:
