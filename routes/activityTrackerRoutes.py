@@ -19,17 +19,25 @@ def add_activityTracker():
     except Exception as e:
         return jsonify({'errors':[{'msg':'Server Error!!'}]}),500
 
+# delete from activty tracker
 @activityTrackerRouter.route('/delete/<activityTracker_id>',methods=['DELETE'])
 def delete_activityTracker(activityTracker_id):
     try:
-        print('Delete ')
+        print('Delete from activity tracker')
+        res = activityTracker.delete_one({'_id':ObjectId(activityTracker_id)})
+        if res.deleted_count == 0:
+            return jsonify({'errors':[{'msg':'Id not found'}]}),404
+        return jsonify({'msg':'Successfully deleted from activity tracker'})
     except Exception as e:
         return jsonify({'errors':[{'msg':'Server Error!!'}]}),500
 
+# update by id to the activity tracker
 @activityTrackerRouter.route('/update/<activityTracker_id>',methods=['PUT'])
 def update_activityTracker(activityTracker_id):
     try:
         print('Update')
+        data = request.json
+        res = activityTracker.update_one({'_id':ObjectId(activityTracker_id)},{'$set':data})
     except Exception as e:
         return jsonify({'errors':[{'msg':'Server Error!!'}]}),500
 
