@@ -6,6 +6,7 @@ load_dotenv()
 
 # From environment variables
 mongoURI = os.getenv('mongoURI')
+SECRET_KEY = os.getenv('SECRET_KEY')
 # Connect to local MongoDB
 client = MongoClient(mongoURI)
 

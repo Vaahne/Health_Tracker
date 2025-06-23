@@ -41,9 +41,12 @@ def update_activityTracker(activityTracker_id):
     except Exception as e:
         return jsonify({'errors':[{'msg':'Server Error!!'}]}),500
 
+# get from activity tracker
 @activityTrackerRouter.route('/get',methods=['GET'])
 def get_activityTracker():
     try:
         print('get all')
+        res = list(activityTracker.find({},{'_id':0}))
+        return jsonify(res),200
     except Exception as e:
         return jsonify({'errors':[{'msg':'Server Error!!'}]}),500
